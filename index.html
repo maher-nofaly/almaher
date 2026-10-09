@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>الماهر للمحاسبة والمستودعات | تحميل البرنامج</title>
+  <meta name="description" content="برنامج الماهر للمحاسبة والمستودعات: فواتير، كاشير وباركود، مخزون ومستودعات، وحسابات العملاء والموردين بالليرة والدولار. عربي بالكامل، لويندوز وأندرويد، ويعمل بدون إنترنت.">
+  <meta name="theme-color" content="#0a2259">
+
+  <!-- معاينة الرابط عند مشاركته على واتساب وفيسبوك. غيّر العنوان إن رفعت الصفحة على مستودع آخر -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="الماهر للمحاسبة والمستودعات">
+  <meta property="og:description" content="كل حسابات محلك في برنامج واحد. حمّله مجاناً لويندوز وأندرويد.">
+  <meta property="og:image" content="https://maher-nofaly.github.io/almaher/share-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Cairo', 'system-ui', 'sans-serif'] },
+          colors: {
+            brand: { 950: '#06163a', 900: '#0a2259', 800: '#0f2f78', 700: '#163f9c', 600: '#1f56c8', 500: '#2f74e8', 400: '#5b95f2', 100: '#e3edff', 50: '#f1f6ff' },
+            gold: { 600: '#d9850b', 500: '#f59e0b', 400: '#fbb73c', 300: '#fcd27a' },
+            app: { 700: '#0b5d55', 600: '#0f6d63', 500: '#14857a', 50: '#eef8f6' }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body { -webkit-tap-highlight-color: transparent; }
+
+    /* ظهور الأقسام عند التمرير */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .delay-1 { transition-delay: .1s; } .delay-2 { transition-delay: .2s; } .delay-3 { transition-delay: .3s; }
+
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .float { animation: float 6s ease-in-out infinite; }
+    @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, .55); } 100% { box-shadow: 0 0 0 18px rgba(37, 211, 102, 0); } }
+    .wa-pulse { animation: pulse-ring 2.2s ease-out infinite; }
+
+    .hero-grid {
+      background-image: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1px);
+      background-size: 26px 26px;
+      mask-image: linear-gradient(to bottom, #000 40%, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent);
+    }
+
+    /* زر التحميل: لمعة عند المرور */
+    .btn-shine { position: relative; overflow: hidden; }
+    .btn-shine::after {
+      content: ''; position: absolute; inset: 0; transform: translateX(120%);
+      background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%);
+      transition: transform .7s ease;
+    }
+    .btn-shine:hover::after { transform: translateX(-120%); }
+
+    /* الجهاز المناسب لزائر الصفحة */
+    .is-recommended { box-shadow: 0 0 0 3px #f59e0b, 0 25px 50px -12px rgba(10, 34, 89, .35); }
+    [data-rec-badge] { display: none; }
+    .is-recommended [data-rec-badge] { display: inline-flex; }
+
+    /* ---- رسوم الشاشات: كل المقاسات بالـ em فتصغر مع الإطار ---- */
+    /* الإطار هو الحاوية، ووحدة cqw تُقاس منه لأبنائه */
+    .mock { container-type: inline-size; }
+    .mock-desk > * { font-size: clamp(5px, 2.05cqw, 15px); }
+    .mock-phone > * { font-size: 5.4cqw; }
+    .mock-phone-hero > * { font-size: 7.5cqw; }
+    .laptop-screen { border: 10px solid #111827; border-bottom-width: 12px; border-radius: 16px 16px 0 0; aspect-ratio: 16 / 10; }
+    .laptop-base { height: 14px; margin-inline: -7%; border-radius: 0 0 16px 16px; background: linear-gradient(#e5e7eb, #9ca3af); position: relative; }
+    .laptop-base::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 18%; height: 5px; border-radius: 0 0 8px 8px; background: #6b7280; }
+    .window-frame { border-radius: 12px; aspect-ratio: 16 / 10; }
+    .phone { border: 9px solid #0b1220; border-radius: 34px; aspect-ratio: 9 / 19; }
+    .phone::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 34%; height: 4.2%; max-height: 18px; border-radius: 999px; background: #0b1220; z-index: 6; }
+    /* لقطة حقيقية في مجلد screenshots تحلّ محل الرسم تلقائياً */
+    .shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; z-index: 5; background: #fff; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .float, .wa-pulse { animation: none; }
+      .btn-shine::after { display: none; }
+    }
+  </style>
+  <noscript><style>.reveal { opacity: 1; transform: none; }</style></noscript>
+</head>
+
+<body class="font-sans bg-slate-50 text-slate-800 antialiased overflow-x-hidden">
+
+  <!-- ============================== شريط التنقل ============================== -->
+  <header id="nav" class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+      <a href="#top" class="flex items-center gap-3">
+        <img src="logo.png" alt="شعار الماهر" class="h-10 w-10 rounded-xl shadow-lg ring-1 ring-white/20">
+        <span class="leading-tight">
+          <span data-nav-text class="block text-lg font-extrabold text-white transition-colors">الماهر</span>
+          <span data-nav-sub class="block text-xs font-semibold text-blue-200 transition-colors">للمحاسبة والمستودعات</span>
+        </span>
+      </a>
+
+      <div class="hidden items-center gap-8 md:flex">
+        <a href="#features" data-nav-link class="font-semibold text-blue-100 transition hover:text-gold-400">المميزات</a>
+        <a href="#gallery" data-nav-link class="font-semibold text-blue-100 transition hover:text-gold-400">صور البرنامج</a>
+        <a href="#download" data-nav-link class="font-semibold text-blue-100 transition hover:text-gold-400">التحميل</a>
+        <a href="#contact" data-nav-link class="font-semibold text-blue-100 transition hover:text-gold-400">تواصل معنا</a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="#download" class="btn-shine hidden rounded-xl bg-gold-500 px-5 py-2.5 font-bold text-brand-950 shadow-lg shadow-gold-500/30 transition hover:-translate-y-0.5 hover:bg-gold-400 sm:inline-flex">
+          <i class="fa-solid fa-download me-2 mt-1"></i> حمّل الآن
+        </a>
+        <button id="menuBtn" type="button" aria-label="القائمة" aria-expanded="false" aria-controls="mobileMenu"
+          class="inline-flex h-11 w-11 items-center justify-center rounded-xl text-white ring-1 ring-white/25 transition md:hidden" data-nav-btn>
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobileMenu" class="mx-4 hidden rounded-2xl bg-white p-2 shadow-2xl md:hidden">
+      <a href="#features" class="block rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-brand-50">المميزات</a>
+      <a href="#gallery" class="block rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-brand-50">صور البرنامج</a>
+      <a href="#download" class="block rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-brand-50">التحميل</a>
+      <a href="#contact" class="block rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-brand-50">تواصل معنا</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============================== القسم العلوي ============================== -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-brand-950 via-brand-900 to-brand-800 pb-20 pt-28 text-white sm:pt-32 lg:pb-28">
+      <div class="hero-grid pointer-events-none absolute inset-0"></div>
+      <div class="pointer-events-none absolute -top-40 start-1/2 h-[520px] w-[520px] rounded-full bg-brand-500/30 blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-32 -start-24 h-[380px] w-[380px] rounded-full bg-gold-500/20 blur-3xl"></div>
+
+      <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-2">
+        <!-- النص -->
+        <div class="text-center lg:text-start">
+          <span class="reveal inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-semibold text-blue-100 ring-1 ring-white/15">
+            <span class="relative flex h-2.5 w-2.5"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"></span></span>
+            الإصدار <span data-ver dir="ltr">1.14.0</span> متوفر الآن
+          </span>
+
+          <h1 class="reveal delay-1 mt-6 text-5xl font-black leading-tight sm:text-6xl lg:text-7xl">
+            <span class="bg-gradient-to-l from-gold-300 via-gold-400 to-gold-500 bg-clip-text text-transparent">الماهر</span>
+            <span class="mt-2 block text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl">للمحاسبة والمستودعات</span>
+          </h1>
+
+          <p class="reveal delay-2 mx-auto mt-6 max-w-xl text-lg leading-relaxed text-blue-100 sm:text-xl lg:mx-0">
+            كل حسابات محلك في برنامج واحد: فواتير البيع والشراء، الكاشير والباركود، المخزون والمستودعات، وحسابات العملاء والموردين بالليرة والدولار.
+            <strong class="font-bold text-white">عربي بالكامل، ويعمل بدون إنترنت.</strong>
+          </p>
+
+          <div class="reveal delay-3 mt-9 flex flex-col items-stretch justify-center gap-4 sm:flex-row lg:justify-start">
+            <a href="https://github.com/maher-nofaly/almaher/releases/latest/download/AlMaher_Setup.exe"
+               class="btn-shine group inline-flex items-center justify-center gap-4 rounded-2xl bg-gold-500 px-7 py-4 text-brand-950 shadow-xl shadow-gold-500/25 transition duration-300 hover:-translate-y-1 hover:bg-gold-400 hover:shadow-2xl hover:shadow-gold-500/40">
+              <i class="fa-brands fa-windows text-3xl transition-transform duration-300 group-hover:scale-110"></i>
+              <span class="text-start leading-tight">
+                <span class="block text-lg font-extrabold">تحميل لويندوز</span>
+                <span class="block text-sm font-semibold opacity-75" dir="ltr">Windows (.exe)</span>
+              </span>
+            </a>
+            <a href="https://github.com/maher-nofaly/almaher/releases/latest/download/almaher.apk"
+               class="btn-shine group inline-flex items-center justify-center gap-4 rounded-2xl bg-white px-7 py-4 text-brand-900 shadow-xl shadow-black/20 ring-1 ring-white/40 transition duration-300 hover:-translate-y-1 hover:bg-emerald-50 hover:shadow-2xl">
+              <i class="fa-brands fa-android text-3xl text-emerald-600 transition-transform duration-300 group-hover:scale-110"></i>
+              <span class="text-start leading-tight">
+                <span class="block text-lg font-extrabold">تحميل لأندرويد</span>
+                <span class="block text-sm font-semibold opacity-60" dir="ltr">Android (.apk)</span>
+              </span>
+            </a>
+          </div>
+
+          <ul class="reveal delay-3 mt-9 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm font-semibold text-blue-100 lg:justify-start">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-plane text-gold-400" aria-hidden="true"></i> يعمل بلا إنترنت</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-language text-gold-400" aria-hidden="true"></i> عربي من الألف للياء</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-shield-halved text-gold-400" aria-hidden="true"></i> نسخ احتياطي تلقائي</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-gift text-gold-400" aria-hidden="true"></i> فترة تجربة مجانية</li>
+          </ul>
+        </div>
+
+        <!-- رسم الكمبيوتر والهاتف -->
+        <div class="reveal delay-2 relative mx-auto w-full max-w-2xl">
+          <div class="laptop relative">
+            <div class="laptop-screen mock mock-desk relative overflow-hidden bg-white shadow-2xl shadow-black/50">
+              <img class="shot" src="screenshots/desktop-home.png" alt="الصفحة الرئيسية للماهر على الكمبيوتر" onerror="this.remove()">
+              <!-- الصفحة الرئيسية بالشريط على طريقة Office -->
+              <div class="flex h-full flex-col bg-slate-100 text-slate-700">
+                <div class="flex items-center gap-[1.6em] whitespace-nowrap bg-app-600 px-[1.2em] pt-[0.7em] text-[1em] font-semibold text-white">
+                  <span class="opacity-80"><i class="fa-solid fa-house"></i></span>
+                  <span class="opacity-80">ملف</span>
+                  <span class="rounded-t-[0.5em] bg-slate-50 px-[1em] py-[0.35em] font-bold text-app-700">الرئيسية</span>
+                  <span class="opacity-80">المبيعات</span>
+                  <span class="opacity-80">المشتريات</span>
+                  <span class="opacity-80">الأصناف والمخزون</span>
+                  <span class="opacity-80">العملاء والموردون</span>
+                  <span class="opacity-80">التقارير والحسابات</span>
+                </div>
+                <div class="flex items-end gap-[1.8em] border-b border-slate-200 bg-slate-50 px-[1.4em] py-[0.8em] text-[0.9em] text-slate-600">
+                  <span class="flex flex-col items-center gap-[0.3em]"><i class="fa-solid fa-file-invoice text-[2em] text-app-600"></i>فاتورة بيع</span>
+                  <span class="flex flex-col items-center gap-[0.3em]"><i class="fa-solid fa-cart-shopping text-[2em] text-brand-600"></i>فاتورة شراء</span>
+                  <span class="flex flex-col items-center gap-[0.3em]"><i class="fa-solid fa-cash-register text-[2em] text-app-600"></i>الكاشير</span>
+                  <span class="flex flex-col items-center gap-[0.3em]"><i class="fa-solid fa-hand-holding-dollar text-[2em] text-emerald-600"></i>سند قبض</span>
+                  <span class="flex flex-col items-center gap-[0.3em]"><i class="fa-solid fa-boxes-stacked text-[2em] text-gold-500"></i>الأصناف</span>
+                  <span class="flex flex-col items-center gap-[0.3em]"><i class="fa-solid fa-users text-[2em] text-violet-600"></i>العملاء</span>
+                  <span class="flex flex-col items-center gap-[0.3em]"><i class="fa-solid fa-chart-column text-[2em] text-rose-500"></i>التقارير</span>
+                </div>
+                <div class="grid grid-cols-4 gap-[0.8em] p-[1em]">
+                  <div class="rounded-[0.8em] bg-white p-[0.8em] shadow-sm"><div class="text-[0.85em] text-slate-500">مبيعات اليوم</div><div class="mt-[0.2em] whitespace-nowrap text-[1.3em] font-extrabold text-emerald-600">2,450,000 ل.س</div></div>
+                  <div class="rounded-[0.8em] bg-white p-[0.8em] shadow-sm"><div class="text-[0.85em] text-slate-500">مقبوضات اليوم</div><div class="mt-[0.2em] whitespace-nowrap text-[1.3em] font-extrabold text-emerald-600">1,980,000 ل.س</div></div>
+                  <div class="rounded-[0.8em] bg-white p-[0.8em] shadow-sm"><div class="text-[0.85em] text-slate-500">مدفوعات اليوم</div><div class="mt-[0.2em] whitespace-nowrap text-[1.3em] font-extrabold text-rose-600">640,000 ل.س</div></div>
+                  <div class="rounded-[0.8em] bg-white p-[0.8em] shadow-sm"><div class="text-[0.85em] text-slate-500">لنا عند العملاء</div><div class="mt-[0.2em] whitespace-nowrap text-[1.3em] font-extrabold text-slate-800">3,215,000 ل.س</div></div>
+                </div>
+                <div class="grid flex-1 grid-cols-3 gap-[0.8em] px-[1em] pb-[1em]">
+                  <div class="rounded-[0.8em] bg-white p-[0.8em] shadow-sm">
+                    <div class="font-bold text-slate-700"><i class="fa-solid fa-box-open me-[0.3em] text-gold-500"></i>الاستعلام عن صنف</div>
+                    <div class="mt-[0.6em] rounded-[0.5em] border border-slate-200 px-[0.6em] py-[0.4em] text-slate-400">سكر أبيض</div>
+                    <div class="mt-[0.6em] rounded-[0.5em] bg-app-50 p-[0.6em]">
+                      <div class="font-bold">سكر أبيض 1 كغ</div>
+                      <div class="mt-[0.2em] flex justify-between text-[0.9em]"><span>الكمية: 240</span><span class="rounded-[0.3em] bg-brand-100 px-[0.4em] font-bold text-brand-700">12,000</span></div>
+                    </div>
+                  </div>
+                  <div class="rounded-[0.8em] bg-white p-[0.8em] shadow-sm">
+                    <div class="font-bold text-slate-700"><i class="fa-solid fa-magnifying-glass me-[0.3em] text-violet-600"></i>آخر الفواتير</div>
+                    <div class="mt-[0.5em] space-y-[0.45em] text-[0.9em]">
+                      <div class="flex justify-between"><span>بيع #1043 · أبو أحمد</span><b>185,000</b></div>
+                      <div class="flex justify-between"><span>بيع #1042 · زبون نقدي</span><b>54,000</b></div>
+                      <div class="flex justify-between"><span>شراء #311 · شركة النور</span><b class="text-rose-600">1,240,000</b></div>
+                      <div class="flex justify-between"><span>بيع #1041 · أم محمد</span><b>96,500</b></div>
+                    </div>
+                  </div>
+                  <div class="rounded-[0.8em] bg-white p-[0.8em] shadow-sm">
+                    <div class="font-bold text-slate-700"><i class="fa-solid fa-bell me-[0.3em] text-orange-500"></i>يحتاج انتباهك</div>
+                    <div class="mt-[0.5em] space-y-[0.45em] text-[0.9em]">
+                      <div class="rounded-[0.4em] bg-orange-50 px-[0.5em] py-[0.3em] text-orange-700">3 أصناف قاربت على النفاد</div>
+                      <div class="rounded-[0.4em] bg-rose-50 px-[0.5em] py-[0.3em] text-rose-700">فاتورتان تجاوزتا موعد السداد</div>
+                      <div class="rounded-[0.4em] bg-sky-50 px-[0.5em] py-[0.3em] text-sky-700">دفعة أدوية تنتهي خلال 20 يوماً</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex justify-between bg-slate-200 px-[1.2em] py-[0.35em] text-[0.8em] text-slate-500">
+                  <span><i class="fa-solid fa-server me-[0.3em]"></i>الخادم يعمل · 2 كاشير متصل</span>
+                  <span><i class="fa-solid fa-cloud-arrow-up me-[0.3em]"></i>آخر نسخة احتياطية 09:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="laptop-base"></div>
+          </div>
+
+          <!-- الهاتف فوق الكمبيوتر -->
+          <div class="float absolute -bottom-10 -start-2 w-[30%] min-w-[110px] max-w-[190px] sm:-start-6">
+            <div class="phone mock mock-phone mock-phone-hero relative overflow-hidden bg-white shadow-2xl shadow-black/50">
+              <img class="shot" src="screenshots/phone-cashier.png" alt="الكاشير على الهاتف" onerror="this.remove()">
+              <div class="flex h-full flex-col text-slate-700">
+                <div class="bg-app-600 px-[0.9em] pb-[0.6em] pt-[2.2em] font-bold text-white"><i class="fa-solid fa-cash-register me-[0.4em]"></i>الكاشير</div>
+                <div class="m-[0.6em] rounded-[0.4em] border border-slate-200 px-[0.5em] py-[0.3em] text-[0.75em] text-slate-400"><i class="fa-solid fa-barcode me-[0.3em]"></i>امسح الباركود</div>
+                <div class="space-y-[0.6em] px-[0.7em] text-[0.85em]">
+                  <div class="flex justify-between"><span>سكر 1 كغ × 2</span><b>24,000</b></div>
+                  <div class="flex justify-between"><span>شاي 500 غ × 1</span><b>38,000</b></div>
+                  <div class="flex justify-between"><span>زيت 1 لتر × 3</span><b>63,000</b></div>
+                  <div class="flex justify-between"><span>معكرونة × 4</span><b>30,000</b></div>
+                </div>
+                <div class="mx-[0.7em] mt-auto flex justify-between rounded-[0.4em] border-2 border-slate-800 px-[0.4em] py-[0.2em] font-bold"><span>المطلوب</span><span>155,000</span></div>
+                <div class="m-[0.7em] rounded-[0.6em] bg-emerald-600 py-[0.6em] text-center font-extrabold text-white"><i class="fa-solid fa-print me-[0.3em]"></i>دفع وطباعة</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== المميزات ============================== -->
+    <section id="features" class="relative py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6">
+        <div class="reveal mx-auto max-w-2xl text-center">
+          <span class="text-sm font-bold uppercase tracking-wider text-gold-600">لماذا الماهر؟</span>
+          <h2 class="mt-3 text-3xl font-black text-brand-900 sm:text-4xl">كل ما يحتاجه محلك، في مكان واحد</h2>
+          <p class="mt-4 text-lg text-slate-600">صُمّم للسوق العربي وبكلمات السوق: «عليه لنا» و«له علينا» بدل المصطلحات المعقدة، وكل شيء جاهز من أول يوم.</p>
+        </div>
+
+        <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="reveal group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-brand-400/40 hover:shadow-xl">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-2xl text-emerald-600 transition group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white"><i class="fa-solid fa-cash-register"></i></div>
+            <h3 class="mt-5 text-xl font-extrabold text-brand-900">كاشير سريع مع الباركود</h3>
+            <p class="mt-2 leading-relaxed text-slate-600">امسح الباركود أو اكتب <span dir="ltr">3*</span> قبله لثلاث قطع، واطبع الإيصال على طابعة حرارية 58 أو 80 مم، وعلّق الفاتورة لتخدم زبوناً آخر.</p>
+          </article>
+
+          <article class="reveal delay-1 group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-brand-400/40 hover:shadow-xl">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-50 text-2xl text-brand-600 transition group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+            <h3 class="mt-5 text-xl font-extrabold text-brand-900">فواتير ومرتجعات</h3>
+            <p class="mt-2 leading-relaxed text-slate-600">بيع وشراء ومرتجعات مرتبطة بفاتورتها، وعروض أسعار وأوامر بيع وشراء تتحول إلى فاتورة بضغطة، مع الخصم والضريبة والطباعة على A4 وA5.</p>
+          </article>
+
+          <article class="reveal delay-2 group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-brand-400/40 hover:shadow-xl">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-50 text-2xl text-gold-600 transition group-hover:scale-110 group-hover:bg-gold-500 group-hover:text-white"><i class="fa-solid fa-warehouse"></i></div>
+            <h3 class="mt-5 text-xl font-extrabold text-brand-900">مخزون ومستودعات</h3>
+            <p class="mt-2 leading-relaxed text-slate-600">عدة مستودعات وتحويل بينها، جرد بالباركود، تواريخ صلاحية ودفعات، أرقام تسلسلية للأجهزة، وتنبيه قبل أن ينفد الصنف.</p>
+          </article>
+
+          <article class="reveal group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-brand-400/40 hover:shadow-xl">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-50 text-2xl text-violet-600 transition group-hover:scale-110 group-hover:bg-violet-600 group-hover:text-white"><i class="fa-solid fa-address-book"></i></div>
+            <h3 class="mt-5 text-xl font-extrabold text-brand-900">العملاء والموردون</h3>
+            <p class="mt-2 leading-relaxed text-slate-600">رصيد كل عميل لحظة بلحظة، كشف حساب PDF، حد للدَّين ومواعيد سداد، تقرير أعمار الديون، وتذكير الزبون عبر واتساب.</p>
+          </article>
+
+          <article class="reveal delay-1 group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-brand-400/40 hover:shadow-xl">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-50 text-2xl text-sky-600 transition group-hover:scale-110 group-hover:bg-sky-600 group-hover:text-white"><i class="fa-solid fa-money-bill-transfer"></i></div>
+            <h3 class="mt-5 text-xl font-extrabold text-brand-900">الليرة والدولار معاً</h3>
+            <p class="mt-2 leading-relaxed text-slate-600">بِع بالعملة التي يدفع بها الزبون بسعر صرف اليوم، والبرنامج يحوّل كل شيء إلى عملتك الأساسية ويبقي الحسابات مضبوطة.</p>
+          </article>
+
+          <article class="reveal delay-2 group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-brand-400/40 hover:shadow-xl">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-50 text-2xl text-rose-600 transition group-hover:scale-110 group-hover:bg-rose-600 group-hover:text-white"><i class="fa-solid fa-chart-pie"></i></div>
+            <h3 class="mt-5 text-xl font-extrabold text-brand-900">حسابات وتقارير دقيقة</h3>
+            <p class="mt-2 leading-relaxed text-slate-600">قيود محاسبية تُكتب وحدها مع كل فاتورة وسند، أرباح وخسائر، ميزانية، مقارنة الشهر بالذي قبله، وإقفال السنة المالية.</p>
+          </article>
+        </div>
+
+        <!-- وأيضاً -->
+        <div class="reveal mt-12 rounded-3xl bg-gradient-to-l from-brand-900 to-brand-700 p-7 text-white sm:p-9">
+          <h3 class="text-xl font-extrabold"><i class="fa-solid fa-plus me-2 text-gold-400"></i>وأيضاً</h3>
+          <ul class="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
+            <li class="rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/15"><i class="fa-solid fa-network-wired me-1.5 text-gold-400"></i>عدة أجهزة كاشير على شبكة المحل</li>
+            <li class="rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/15"><i class="fa-solid fa-user-shield me-1.5 text-gold-400"></i>مستخدمون وصلاحيات وسجل تعديلات</li>
+            <li class="rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/15"><i class="fa-solid fa-barcode me-1.5 text-gold-400"></i>طباعة ملصقات باركود</li>
+            <li class="rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/15"><i class="fa-solid fa-file-excel me-1.5 text-gold-400"></i>استيراد وتصدير Excel</li>
+            <li class="rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/15"><i class="fa-solid fa-calendar-check me-1.5 text-gold-400"></i>أقساط</li>
+            <li class="rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/15"><i class="fa-solid fa-money-check me-1.5 text-gold-400"></i>شيكات</li>
+            <li class="rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/15"><i class="fa-solid fa-tags me-1.5 text-gold-400"></i>قوائم أسعار وعروض</li>
+            <li class="rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/15"><i class="fa-solid fa-clock-rotate-left me-1.5 text-gold-400"></i>ورديات الصندوق</li>
+            <li class="rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/15"><i class="fa-solid fa-moon me-1.5 text-gold-400"></i>وضع ليلي وخط كبير</li>
+            <li class="rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/15"><i class="fa-solid fa-keyboard me-1.5 text-gold-400"></i>اختصارات لوحة المفاتيح على الكمبيوتر</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== صور البرنامج ============================== -->
+    <section id="gallery" class="relative overflow-hidden bg-white py-20 sm:py-28">
+      <div class="pointer-events-none absolute -end-40 top-20 h-96 w-96 rounded-full bg-brand-100 blur-3xl"></div>
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
+        <div class="reveal mx-auto max-w-2xl text-center">
+          <span class="text-sm font-bold tracking-wider text-gold-600">صور البرنامج</span>
+          <h2 class="mt-3 text-3xl font-black text-brand-900 sm:text-4xl">شاهده قبل أن تحمّله</h2>
+          <p class="mt-4 text-lg text-slate-600">واجهة واحدة مألوفة على الكمبيوتر والهاتف.</p>
+        </div>
+
+        <div class="reveal mt-10 flex justify-center">
+          <div role="tablist" aria-label="نوع الجهاز" class="inline-flex rounded-2xl bg-slate-100 p-1.5">
+            <button type="button" role="tab" aria-selected="true" data-tab="desk" class="tab-btn rounded-xl px-6 py-2.5 font-bold transition"><i class="fa-solid fa-laptop me-2"></i>على الكمبيوتر</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="phone" class="tab-btn rounded-xl px-6 py-2.5 font-bold transition"><i class="fa-solid fa-mobile-screen me-2"></i>على الهاتف</button>
+          </div>
+        </div>
+
+        <!-- الكمبيوتر -->
+        <div data-panel="desk" class="mt-12 grid gap-10 lg:grid-cols-2">
+          <figure class="reveal">
+            <div class="window-frame mock mock-desk relative overflow-hidden bg-white shadow-2xl ring-1 ring-slate-200">
+              <img class="shot" src="screenshots/desktop-invoice.png" alt="فاتورة بيع على الكمبيوتر" onerror="this.remove()">
+              <div class="flex h-full flex-col text-slate-700">
+                <div class="flex items-center justify-between bg-app-600 px-[1.2em] py-[0.6em] text-white" dir="ltr">
+                  <span class="flex gap-[0.4em]"><i class="fa-solid fa-minus"></i><i class="fa-regular fa-square"></i><i class="fa-solid fa-xmark"></i></span>
+                  <span class="font-bold" dir="rtl">فاتورة بيع #1044</span>
+                </div>
+                <div class="grid grid-cols-4 gap-[0.6em] border-b border-slate-200 bg-slate-50 p-[0.8em] text-[0.9em]">
+                  <div class="rounded-[0.4em] border border-slate-200 bg-white px-[0.5em] py-[0.3em]"><span class="text-slate-400">العميل: </span>أبو أحمد</div>
+                  <div class="rounded-[0.4em] border border-slate-200 bg-white px-[0.5em] py-[0.3em]"><span class="text-slate-400">التاريخ: </span>2026/10/10</div>
+                  <div class="rounded-[0.4em] border border-slate-200 bg-white px-[0.5em] py-[0.3em]"><span class="text-slate-400">العملة: </span>ليرة سورية</div>
+                  <div class="rounded-[0.4em] border border-slate-200 bg-white px-[0.5em] py-[0.3em]"><span class="text-slate-400">المستودع: </span>الرئيسي</div>
+                </div>
+                <div class="flex gap-[0.6em] p-[0.8em] text-[0.9em]">
+                  <div class="flex-1 rounded-[0.4em] border-2 border-app-500 bg-white px-[0.6em] py-[0.35em] text-slate-400"><i class="fa-solid fa-barcode me-[0.4em]"></i>الصنف أو الباركود ثم Enter</div>
+                  <div class="w-[18%] rounded-[0.4em] border border-slate-200 bg-white px-[0.6em] py-[0.35em] text-slate-400">الكمية</div>
+                </div>
+                <div class="mx-[0.8em] overflow-hidden rounded-[0.5em] border border-slate-200 text-[0.9em]">
+                  <div class="grid grid-cols-[3fr_1fr_1.3fr_1.4fr] bg-slate-100 px-[0.7em] py-[0.4em] font-bold text-slate-500"><span>الصنف</span><span>الكمية</span><span>السعر</span><span class="text-left">المبلغ</span></div>
+                  <div class="grid grid-cols-[3fr_1fr_1.3fr_1.4fr] border-t border-slate-100 px-[0.7em] py-[0.4em]"><span>سكر أبيض 1 كغ</span><span>10</span><span>12,000</span><span class="text-left font-bold">120,000</span></div>
+                  <div class="grid grid-cols-[3fr_1fr_1.3fr_1.4fr] border-t border-slate-100 bg-app-50 px-[0.7em] py-[0.4em]"><span>زيت دوار الشمس 1 لتر</span><span>6</span><span>21,000</span><span class="text-left font-bold">126,000</span></div>
+                  <div class="grid grid-cols-[3fr_1fr_1.3fr_1.4fr] border-t border-slate-100 px-[0.7em] py-[0.4em]"><span>شاي 500 غ</span><span>2</span><span>38,000</span><span class="text-left font-bold">76,000</span></div>
+                  <div class="grid grid-cols-[3fr_1fr_1.3fr_1.4fr] border-t border-slate-100 px-[0.7em] py-[0.4em]"><span>رز مصري 1 كغ</span><span>5</span><span>15,000</span><span class="text-left font-bold">75,000</span></div>
+                </div>
+                <div class="mt-auto flex items-end justify-between gap-[1em] p-[0.8em] text-[0.95em]">
+                  <div class="flex gap-[0.5em]">
+                    <span class="rounded-[0.5em] bg-app-600 px-[1em] py-[0.45em] font-bold text-white"><i class="fa-solid fa-check me-[0.3em]"></i>حفظ <span dir="ltr">Ctrl+S</span></span>
+                    <span class="rounded-[0.5em] bg-slate-200 px-[1em] py-[0.45em] font-bold"><i class="fa-solid fa-print me-[0.3em]"></i>طباعة</span>
+                  </div>
+                  <div class="w-[42%] space-y-[0.2em] rounded-[0.6em] bg-slate-50 p-[0.6em]">
+                    <div class="flex justify-between"><span>المجموع</span><b>397,000</b></div>
+                    <div class="flex justify-between"><span>الحسم</span><b>7,000</b></div>
+                    <div class="flex justify-between text-[1.15em] text-app-700"><span>المطلوب</span><b>390,000</b></div>
+                    <div class="flex justify-between text-rose-600"><span>الباقي على الحساب</span><b>190,000</b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="mt-4 text-center font-semibold text-slate-600">فاتورة بيع: صف إدخال سريع بالباركود ولوحة المفاتيح</figcaption>
+          </figure>
+
+          <figure class="reveal delay-1">
+            <div class="window-frame mock mock-desk relative overflow-hidden bg-white shadow-2xl ring-1 ring-slate-200">
+              <img class="shot" src="screenshots/desktop-items.png" alt="قائمة الأصناف على الكمبيوتر" onerror="this.remove()">
+              <div class="flex h-full flex-col text-slate-700">
+                <div class="flex items-center justify-between bg-app-600 px-[1.2em] py-[0.6em] text-white" dir="ltr">
+                  <span class="flex gap-[0.4em]"><i class="fa-solid fa-minus"></i><i class="fa-regular fa-square"></i><i class="fa-solid fa-xmark"></i></span>
+                  <span class="font-bold" dir="rtl">الأصناف</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-[0.5em] p-[0.8em] text-[0.9em]">
+                  <div class="flex-1 rounded-[0.4em] border border-slate-200 px-[0.6em] py-[0.35em] text-slate-400"><i class="fa-solid fa-magnifying-glass me-[0.4em]"></i>ابحث بالاسم أو الباركود</div>
+                  <span class="rounded-full bg-app-600 px-[0.8em] py-[0.25em] font-semibold text-white">الكل</span>
+                  <span class="rounded-full bg-slate-100 px-[0.8em] py-[0.25em] font-semibold">مواد غذائية</span>
+                  <span class="rounded-full bg-slate-100 px-[0.8em] py-[0.25em] font-semibold">منظفات</span>
+                </div>
+                <div class="mx-[0.8em] overflow-hidden rounded-[0.5em] border border-slate-200 text-[0.9em]">
+                  <div class="grid grid-cols-[3fr_1.6fr_1fr_1.4fr] bg-slate-100 px-[0.7em] py-[0.4em] font-bold text-slate-500"><span>الصنف <i class="fa-solid fa-arrow-down-a-z"></i></span><span>الباركود</span><span>الكمية</span><span class="text-left">سعر البيع</span></div>
+                  <div class="grid grid-cols-[3fr_1.6fr_1fr_1.4fr] items-center border-t border-slate-100 px-[0.7em] py-[0.45em]"><span>رز مصري 1 كغ</span><span dir="ltr" class="text-right text-slate-400">6221034</span><span>85</span><span class="text-left"><b class="rounded-[0.3em] bg-brand-100 px-[0.4em] text-brand-700">15,000</b></span></div>
+                  <div class="grid grid-cols-[3fr_1.6fr_1fr_1.4fr] items-center border-t border-slate-100 px-[0.7em] py-[0.45em]"><span>زيت دوار الشمس 1 لتر</span><span dir="ltr" class="text-right text-slate-400">6281057</span><span>142</span><span class="text-left"><b class="rounded-[0.3em] bg-brand-100 px-[0.4em] text-brand-700">21,000</b></span></div>
+                  <div class="grid grid-cols-[3fr_1.6fr_1fr_1.4fr] items-center border-t border-slate-100 bg-orange-50 px-[0.7em] py-[0.45em]"><span>سائل جلي 750 مل</span><span dir="ltr" class="text-right text-slate-400">6291003</span><span class="font-bold text-orange-600">4</span><span class="text-left"><b class="rounded-[0.3em] bg-brand-100 px-[0.4em] text-brand-700">17,500</b></span></div>
+                  <div class="grid grid-cols-[3fr_1.6fr_1fr_1.4fr] items-center border-t border-slate-100 px-[0.7em] py-[0.45em]"><span>سكر أبيض 1 كغ</span><span dir="ltr" class="text-right text-slate-400">6223001</span><span>240</span><span class="text-left"><b class="rounded-[0.3em] bg-brand-100 px-[0.4em] text-brand-700">12,000</b></span></div>
+                  <div class="grid grid-cols-[3fr_1.6fr_1fr_1.4fr] items-center border-t border-slate-100 px-[0.7em] py-[0.45em]"><span>شاي 500 غ</span><span dir="ltr" class="text-right text-slate-400">6224410</span><span>36</span><span class="text-left"><b class="rounded-[0.3em] bg-brand-100 px-[0.4em] text-brand-700">38,000</b></span></div>
+                </div>
+                <div class="mt-auto flex justify-between bg-slate-50 px-[1em] py-[0.5em] text-[0.85em] text-slate-500">
+                  <span>↑↓ للتنقل · Enter للفتح · F10 الأصناف</span>
+                  <span>5 أصناف · 1 قارب على النفاد</span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="mt-4 text-center font-semibold text-slate-600">الأصناف: جدول تفرزه بالضغط على رأس العمود وتتنقل فيه بالأسهم</figcaption>
+          </figure>
+        </div>
+
+        <!-- الهاتف -->
+        <div data-panel="phone" class="mt-12 hidden">
+          <div class="grid grid-cols-1 justify-items-center gap-10 sm:grid-cols-3">
+            <figure class="reveal w-full max-w-[250px]">
+              <div class="phone mock mock-phone relative overflow-hidden bg-white shadow-2xl">
+                <img class="shot" src="screenshots/phone-cashier.png" alt="الكاشير على الهاتف" onerror="this.remove()">
+                <div class="flex h-full flex-col text-slate-700">
+                  <div class="flex items-center justify-between bg-app-600 px-[0.9em] pb-[0.7em] pt-[2.3em] font-bold text-white"><span><i class="fa-solid fa-cash-register me-[0.4em]"></i>الكاشير</span><i class="fa-solid fa-pause"></i></div>
+                  <div class="m-[0.7em] rounded-[0.5em] border border-slate-200 px-[0.6em] py-[0.4em] text-[0.8em] text-slate-400"><i class="fa-solid fa-barcode me-[0.3em]"></i>اكتب اسم الصنف أو امسح الباركود</div>
+                  <div class="space-y-[0.55em] px-[0.8em] text-[0.82em]">
+                    <div class="flex justify-between"><span>سكر أبيض 1 كغ<br><span class="text-slate-400">2 × 12,000</span></span><b>24,000</b></div>
+                    <div class="flex justify-between"><span>شاي 500 غ<br><span class="text-slate-400">1 × 38,000</span></span><b>38,000</b></div>
+                    <div class="flex justify-between"><span>زيت 1 لتر<br><span class="text-slate-400">3 × 21,000</span></span><b>63,000</b></div>
+                    <div class="flex justify-between"><span>معكرونة 500 غ<br><span class="text-slate-400">4 × 7,500</span></span><b>30,000</b></div>
+                  </div>
+                  <div class="mt-auto space-y-[0.25em] border-t border-slate-200 p-[0.8em] text-[0.82em]">
+                    <div class="flex justify-between"><span>المجموع</span><b>155,000</b></div>
+                    <div class="flex justify-between"><span>حسم</span><b>5,000</b></div>
+                    <div class="flex justify-between rounded-[0.4em] border-2 border-slate-800 px-[0.4em] py-[0.2em] text-[1.1em]"><span>المطلوب</span><b>150,000</b></div>
+                    <div class="flex gap-[0.4em] pt-[0.3em] text-[0.9em]"><span class="rounded-full bg-slate-100 px-[0.6em]">150,000</span><span class="rounded-full bg-slate-100 px-[0.6em]">200,000</span><span class="rounded-full bg-slate-100 px-[0.6em]">500,000</span></div>
+                  </div>
+                  <div class="mx-[0.8em] mb-[0.9em] rounded-[0.6em] bg-emerald-600 py-[0.6em] text-center font-extrabold text-white"><i class="fa-solid fa-print me-[0.4em]"></i>دفع وطباعة</div>
+                </div>
+              </div>
+              <figcaption class="mt-4 text-center font-semibold text-slate-600">الكاشير وطباعة الإيصال</figcaption>
+            </figure>
+
+            <figure class="reveal delay-1 w-full max-w-[250px]">
+              <div class="phone mock mock-phone relative overflow-hidden bg-white shadow-2xl">
+                <img class="shot" src="screenshots/phone-customer.png" alt="حساب عميل على الهاتف" onerror="this.remove()">
+                <div class="flex h-full flex-col text-slate-700">
+                  <div class="flex items-center justify-between bg-app-600 px-[0.9em] pb-[0.7em] pt-[2.3em] font-bold text-white"><span><i class="fa-solid fa-user me-[0.4em]"></i>أبو أحمد</span><i class="fa-brands fa-whatsapp text-[1.2em]"></i></div>
+                  <div class="m-[0.7em] rounded-[0.8em] bg-gradient-to-l from-brand-800 to-brand-600 p-[0.8em] text-white">
+                    <div class="text-[0.8em] opacity-80">عليه لنا</div>
+                    <div class="text-[1.5em] font-black">425,000 ل.س</div>
+                    <div class="mt-[0.2em] text-[0.75em] opacity-80">حد الدين: 1,000,000</div>
+                  </div>
+                  <div class="px-[0.8em] text-[0.8em] font-bold text-slate-500">كشف الحساب</div>
+                  <div class="mt-[0.4em] space-y-[0.45em] px-[0.8em] text-[0.78em]">
+                    <div class="flex justify-between"><span>10/01 فاتورة بيع #1021</span><b class="text-rose-600">+300,000</b></div>
+                    <div class="flex justify-between"><span>10/03 سند قبض #88</span><b class="text-emerald-600">−150,000</b></div>
+                    <div class="flex justify-between"><span>10/06 فاتورة بيع #1037</span><b class="text-rose-600">+325,000</b></div>
+                    <div class="flex justify-between"><span>10/08 مرتجع بيع #12</span><b class="text-emerald-600">−50,000</b></div>
+                    <div class="flex justify-between border-t border-slate-200 pt-[0.4em]"><span class="font-bold">الرصيد</span><b>425,000</b></div>
+                  </div>
+                  <div class="mt-auto grid grid-cols-3 gap-[0.4em] p-[0.8em] text-center text-[0.75em] font-bold">
+                    <span class="rounded-[0.5em] bg-slate-100 py-[0.5em]"><i class="fa-solid fa-file-pdf block text-[1.3em] text-rose-500"></i>كشف PDF</span>
+                    <span class="rounded-[0.5em] bg-slate-100 py-[0.5em]"><i class="fa-brands fa-whatsapp block text-[1.3em] text-emerald-600"></i>تذكير</span>
+                    <span class="rounded-[0.5em] bg-slate-100 py-[0.5em]"><i class="fa-solid fa-hand-holding-dollar block text-[1.3em] text-app-600"></i>سند قبض</span>
+                  </div>
+                </div>
+              </div>
+              <figcaption class="mt-4 text-center font-semibold text-slate-600">حساب العميل وكشفه</figcaption>
+            </figure>
+
+            <figure class="reveal delay-2 w-full max-w-[250px]">
+              <div class="phone mock mock-phone relative overflow-hidden bg-white shadow-2xl">
+                <img class="shot" src="screenshots/phone-reports.png" alt="التقارير على الهاتف" onerror="this.remove()">
+                <div class="flex h-full flex-col text-slate-700">
+                  <div class="bg-app-600 px-[0.9em] pb-[0.7em] pt-[2.3em] font-bold text-white"><i class="fa-solid fa-chart-column me-[0.4em]"></i>التقارير</div>
+                  <div class="flex gap-[0.35em] overflow-hidden whitespace-nowrap p-[0.7em] text-[0.72em] font-semibold">
+                    <span class="rounded-full bg-app-600 px-[0.7em] py-[0.2em] text-white">الأرباح</span>
+                    <span class="rounded-full bg-slate-100 px-[0.7em] py-[0.2em]">المبيعات</span>
+                    <span class="rounded-full bg-slate-100 px-[0.7em] py-[0.2em]">المخزون</span>
+                    <span class="rounded-full bg-slate-100 px-[0.7em] py-[0.2em]">أعمار الديون</span>
+                  </div>
+                  <div class="mx-[0.7em] rounded-[0.8em] bg-emerald-50 p-[0.8em]">
+                    <div class="text-[0.8em] text-emerald-700">ربح هذا الشهر</div>
+                    <div class="text-[1.45em] font-black text-emerald-700">4,820,000 ل.س</div>
+                    <div class="text-[0.72em] font-semibold text-emerald-600"><i class="fa-solid fa-arrow-trend-up me-[0.2em]"></i>أكثر من الشهر الماضي بـ 12%</div>
+                  </div>
+                  <div class="mx-[0.7em] mt-[0.8em] flex h-[22%] items-end justify-between gap-[0.35em] rounded-[0.6em] bg-slate-50 p-[0.6em]">
+                    <span class="w-full rounded-t-[0.3em] bg-brand-400" style="height:45%"></span>
+                    <span class="w-full rounded-t-[0.3em] bg-brand-400" style="height:62%"></span>
+                    <span class="w-full rounded-t-[0.3em] bg-brand-400" style="height:38%"></span>
+                    <span class="w-full rounded-t-[0.3em] bg-brand-400" style="height:74%"></span>
+                    <span class="w-full rounded-t-[0.3em] bg-brand-400" style="height:56%"></span>
+                    <span class="w-full rounded-t-[0.3em] bg-brand-500" style="height:88%"></span>
+                    <span class="w-full rounded-t-[0.3em] bg-gold-500" style="height:100%"></span>
+                  </div>
+                  <div class="px-[0.8em] pt-[0.8em] text-[0.8em] font-bold text-slate-500">الأكثر مبيعاً</div>
+                  <div class="space-y-[0.4em] px-[0.8em] pt-[0.3em] text-[0.78em]">
+                    <div class="flex justify-between"><span>1. سكر أبيض 1 كغ</span><b>412</b></div>
+                    <div class="flex justify-between"><span>2. زيت دوار الشمس</span><b>287</b></div>
+                    <div class="flex justify-between"><span>3. شاي 500 غ</span><b>164</b></div>
+                  </div>
+                </div>
+              </div>
+              <figcaption class="mt-4 text-center font-semibold text-slate-600">الأرباح والتقارير</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <p class="reveal mt-10 text-center text-sm text-slate-400">الأرقام والأسماء في الصور للتوضيح فقط.</p>
+      </div>
+    </section>
+
+    <!-- ============================== التحميل ============================== -->
+    <section id="download" class="relative overflow-hidden bg-gradient-to-b from-brand-50 to-slate-50 py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="reveal mx-auto max-w-2xl text-center">
+          <span class="text-sm font-bold tracking-wider text-gold-600">التحميل</span>
+          <h2 class="mt-3 text-3xl font-black text-brand-900 sm:text-4xl">حمّل الماهر الآن</h2>
+          <p class="mt-4 text-lg text-slate-600">
+            الإصدار <b dir="ltr" data-ver>1.14.0</b>
+            <span data-date-wrap class="hidden">· صدر في <span data-date></span></span>
+            · والبرنامج يخبرك بنفسه بكل تحديث جديد.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-8 md:grid-cols-2">
+          <!-- ويندوز -->
+          <div data-os="windows" class="reveal relative flex flex-col rounded-3xl bg-white p-8 shadow-xl shadow-brand-900/5 ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
+            <span data-rec-badge class="absolute -top-3.5 start-8 items-center gap-1.5 rounded-full bg-gold-500 px-3 py-1 text-xs font-extrabold text-brand-950 shadow"><i class="fa-solid fa-star"></i> مناسب لجهازك</span>
+            <div class="flex items-center gap-4">
+              <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-600 text-3xl text-white shadow-lg shadow-brand-600/30"><i class="fa-brands fa-windows"></i></div>
+              <div>
+                <h3 class="text-2xl font-extrabold text-brand-900">نسخة الكمبيوتر</h3>
+                <p class="font-semibold text-slate-500">ويندوز 10 و11 (64 بت)</p>
+              </div>
+            </div>
+            <ul class="mt-6 space-y-2.5 text-slate-600">
+              <li class="flex gap-2.5"><i class="fa-solid fa-circle-check mt-1.5 text-emerald-500"></i>واجهة بشريط أوامر واختصارات لوحة المفاتيح</li>
+              <li class="flex gap-2.5"><i class="fa-solid fa-circle-check mt-1.5 text-emerald-500"></i>يصبح خادماً لأجهزة الكاشير على شبكة المحل</li>
+              <li class="flex gap-2.5"><i class="fa-solid fa-circle-check mt-1.5 text-emerald-500"></i>الحجم حوالي <b data-size-win>38</b> ميغابايت</li>
+            </ul>
+            <a href="https://github.com/maher-nofaly/almaher/releases/latest/download/AlMaher_Setup.exe"
+               class="btn-shine group mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-brand-700 px-6 py-4 text-lg font-extrabold text-white shadow-lg shadow-brand-700/30 transition hover:-translate-y-0.5 hover:bg-brand-600">
+              <i class="fa-solid fa-download transition group-hover:translate-y-0.5"></i> تحميل لويندوز <span class="text-sm font-semibold opacity-75" dir="ltr">(.exe)</span>
+            </a>
+            <p class="mt-4 text-sm leading-relaxed text-slate-500"><i class="fa-solid fa-circle-info me-1 text-brand-500"></i>إن ظهرت رسالة <span dir="ltr" class="whitespace-nowrap">Windows protected your PC</span> اضغط <span dir="ltr" class="whitespace-nowrap">More info</span> ثم <span dir="ltr" class="whitespace-nowrap">Run anyway</span>.</p>
+          </div>
+
+          <!-- أندرويد -->
+          <div data-os="android" class="reveal delay-1 relative flex flex-col rounded-3xl bg-white p-8 shadow-xl shadow-brand-900/5 ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
+            <span data-rec-badge class="absolute -top-3.5 start-8 items-center gap-1.5 rounded-full bg-gold-500 px-3 py-1 text-xs font-extrabold text-brand-950 shadow"><i class="fa-solid fa-star"></i> مناسب لجهازك</span>
+            <div class="flex items-center gap-4">
+              <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-600 text-3xl text-white shadow-lg shadow-emerald-600/30"><i class="fa-brands fa-android"></i></div>
+              <div>
+                <h3 class="text-2xl font-extrabold text-brand-900">نسخة الهاتف</h3>
+                <p class="font-semibold text-slate-500">أندرويد 7 فما فوق</p>
+              </div>
+            </div>
+            <ul class="mt-6 space-y-2.5 text-slate-600">
+              <li class="flex gap-2.5"><i class="fa-solid fa-circle-check mt-1.5 text-emerald-500"></i>مسح الباركود بكاميرا الهاتف</li>
+              <li class="flex gap-2.5"><i class="fa-solid fa-circle-check mt-1.5 text-emerald-500"></i>طباعة الإيصال على طابعة بلوتوث</li>
+              <li class="flex gap-2.5"><i class="fa-solid fa-circle-check mt-1.5 text-emerald-500"></i>الحجم حوالي <b data-size-apk>91</b> ميغابايت</li>
+            </ul>
+            <a href="https://github.com/maher-nofaly/almaher/releases/latest/download/almaher.apk"
+               class="btn-shine group mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-emerald-600 px-6 py-4 text-lg font-extrabold text-white shadow-lg shadow-emerald-600/30 transition hover:-translate-y-0.5 hover:bg-emerald-500">
+              <i class="fa-solid fa-download transition group-hover:translate-y-0.5"></i> تحميل لأندرويد <span class="text-sm font-semibold opacity-75" dir="ltr">(.apk)</span>
+            </a>
+            <p class="mt-4 text-sm leading-relaxed text-slate-500"><i class="fa-solid fa-circle-info me-1 text-emerald-600"></i>عند التثبيت اسمح للهاتف بتثبيت التطبيقات من هذا المصدر.</p>
+          </div>
+        </div>
+
+        <!-- ثلاث خطوات -->
+        <ol class="mt-14 grid gap-6 sm:grid-cols-3">
+          <li class="reveal flex items-start gap-4 rounded-2xl bg-white p-6 ring-1 ring-slate-200">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-100 text-lg font-black text-brand-700">1</span>
+            <div><h3 class="font-extrabold text-brand-900">حمّل وثبّت</h3><p class="mt-1 text-sm text-slate-600">اختر نسخة جهازك من الأعلى وثبّتها.</p></div>
+          </li>
+          <li class="reveal delay-1 flex items-start gap-4 rounded-2xl bg-white p-6 ring-1 ring-slate-200">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-100 text-lg font-black text-brand-700">2</span>
+            <div><h3 class="font-extrabold text-brand-900">جرّبه مجاناً</h3><p class="mt-1 text-sm text-slate-600">ابدأ العمل مباشرة خلال فترة التجربة.</p></div>
+          </li>
+          <li class="reveal delay-2 flex items-start gap-4 rounded-2xl bg-white p-6 ring-1 ring-slate-200">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-100 text-lg font-black text-brand-700">3</span>
+            <div><h3 class="font-extrabold text-brand-900">فعّله بكود</h3><p class="mt-1 text-sm text-slate-600">راسلنا على واتساب ويصلك كود التفعيل.</p></div>
+          </li>
+        </ol>
+
+        <div class="reveal mt-10 flex flex-col items-center gap-4 text-center">
+          <a data-wa href="https://wa.me/963992984536" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-3 rounded-2xl bg-[#25D366] px-7 py-3.5 text-lg font-extrabold text-white shadow-lg shadow-emerald-500/30 transition hover:-translate-y-0.5 hover:brightness-105">
+            <i class="fa-brands fa-whatsapp text-2xl"></i> اطلب نسختك عبر واتساب
+          </a>
+          <a href="https://github.com/maher-nofaly/almaher/releases" target="_blank" rel="noopener" class="text-sm font-semibold text-brand-600 underline-offset-4 hover:underline">
+            <i class="fa-brands fa-github me-1"></i>كل الإصدارات وملاحظات التحديث
+          </a>
+          <p class="text-sm text-slate-400"><i class="fa-brands fa-apple me-1"></i>غير متوفر حالياً لآيفون وماك.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== التذييل ============================== -->
+  <footer id="contact" class="bg-brand-950 text-blue-100">
+    <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
+      <div>
+        <div class="flex items-center gap-3">
+          <img src="logo.png" alt="" class="h-12 w-12 rounded-xl">
+          <div>
+            <div class="text-xl font-extrabold text-white">الماهر</div>
+            <div class="text-sm">للمحاسبة والمستودعات</div>
+          </div>
+        </div>
+        <p class="mt-5 max-w-sm leading-relaxed text-blue-200/80">برنامج محاسبة ومستودعات عربي للمحلات والمستودعات، يعمل على الكمبيوتر والهاتف بدون إنترنت.</p>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-extrabold text-white">روابط</h2>
+        <ul class="mt-4 space-y-2.5">
+          <li><a href="#features" class="transition hover:text-gold-400">المميزات</a></li>
+          <li><a href="#gallery" class="transition hover:text-gold-400">صور البرنامج</a></li>
+          <li><a href="#download" class="transition hover:text-gold-400">التحميل</a></li>
+          <li><a href="https://github.com/maher-nofaly/almaher/releases" target="_blank" rel="noopener" class="transition hover:text-gold-400">الإصدارات على GitHub</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-extrabold text-white">تواصل معنا</h2>
+        <ul class="mt-4 space-y-3">
+          <li><a data-wa href="https://wa.me/963992984536" target="_blank" rel="noopener" class="inline-flex items-center gap-3 transition hover:text-gold-400"><i class="fa-brands fa-whatsapp w-5 text-xl text-[#25D366]"></i><span dir="ltr">+963 992 984 536</span></a></li>
+          <li><a data-wa href="https://wa.me/13432967736" target="_blank" rel="noopener" class="inline-flex items-center gap-3 transition hover:text-gold-400"><i class="fa-brands fa-whatsapp w-5 text-xl text-[#25D366]"></i><span dir="ltr">+1 343 296 7736</span></a></li>
+        </ul>
+        <div class="mt-5 flex gap-3">
+          <a href="https://t.me/+963940890911" target="_blank" rel="noopener" aria-label="تيليغرام" class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-lg transition hover:-translate-y-0.5 hover:bg-[#229ED9] hover:text-white"><i class="fa-brands fa-telegram"></i></a>
+          <a href="https://www.facebook.com/share/1BpYdHzqbm/" target="_blank" rel="noopener" aria-label="فيسبوك" class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-lg transition hover:-translate-y-0.5 hover:bg-[#1877F2] hover:text-white"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://github.com/maher-nofaly/almaher" target="_blank" rel="noopener" aria-label="GitHub" class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-lg transition hover:-translate-y-0.5 hover:bg-white hover:text-brand-950"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/10">
+      <p class="mx-auto max-w-7xl px-4 py-6 text-center text-sm text-blue-200/70 sm:px-6">© <span id="year">2026</span> الماهر للمحاسبة والمستودعات · تطوير <a href="cv.html" class="font-bold text-gold-400 underline decoration-gold-400/40 underline-offset-4 transition hover:text-gold-300 hover:decoration-gold-300">ماهر النوفلي</a> · جميع الحقوق محفوظة</p>
+    </div>
+  </footer>
+
+  <!-- زر واتساب العائم -->
+  <a data-wa href="https://wa.me/963992984536" target="_blank" rel="noopener" aria-label="راسلنا على واتساب"
+     class="wa-pulse fixed bottom-5 end-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-3xl text-white shadow-xl transition hover:scale-110">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <script>
+    (function () {
+      // رسالة واتساب الجاهزة، نفس رسالة البرنامج
+      var msg = encodeURIComponent('السلام عليكم، اريد طلب نسخة برنامج الماهر للمحاسبة والمستودعات');
+      document.querySelectorAll('[data-wa]').forEach(function (a) { a.href = a.href.split('?')[0] + '?text=' + msg; });
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // شريط التنقل: شفاف فوق القسم العلوي، أبيض بعد التمرير
+      var nav = document.getElementById('nav');
+      function onScroll() {
+        var solid = window.scrollY > 40;
+        nav.classList.toggle('bg-white/90', solid);
+        nav.classList.toggle('backdrop-blur-md', solid);
+        nav.classList.toggle('shadow-lg', solid);
+        nav.querySelectorAll('[data-nav-text]').forEach(function (e) { e.classList.toggle('text-white', !solid); e.classList.toggle('text-brand-900', solid); });
+        nav.querySelectorAll('[data-nav-sub]').forEach(function (e) { e.classList.toggle('text-blue-200', !solid); e.classList.toggle('text-slate-500', solid); });
+        nav.querySelectorAll('[data-nav-link]').forEach(function (e) { e.classList.toggle('text-blue-100', !solid); e.classList.toggle('text-slate-600', solid); });
+        nav.querySelectorAll('[data-nav-btn]').forEach(function (e) { e.classList.toggle('text-white', !solid); e.classList.toggle('text-brand-900', solid); e.classList.toggle('ring-white/25', !solid); e.classList.toggle('ring-slate-300', solid); });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // قائمة الهاتف
+      var btn = document.getElementById('menuBtn');
+      var menu = document.getElementById('mobileMenu');
+      btn.addEventListener('click', function () {
+        var open = menu.classList.toggle('hidden') === false;
+        btn.setAttribute('aria-expanded', String(open));
+        btn.querySelector('i').className = open ? 'fa-solid fa-xmark text-lg' : 'fa-solid fa-bars text-lg';
+      });
+      menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { menu.classList.add('hidden'); btn.setAttribute('aria-expanded', 'false'); btn.querySelector('i').className = 'fa-solid fa-bars text-lg'; }); });
+
+      // ظهور العناصر عند التمرير
+      var items = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        items.forEach(function (el) { io.observe(el); });
+      } else {
+        items.forEach(function (el) { el.classList.add('in'); });
+      }
+
+      // تبويب صور الكمبيوتر / الهاتف
+      var tabs = document.querySelectorAll('[data-tab]');
+      function showTab(name) {
+        tabs.forEach(function (t) {
+          var on = t.getAttribute('data-tab') === name;
+          t.setAttribute('aria-selected', String(on));
+          t.classList.toggle('bg-white', on); t.classList.toggle('text-brand-900', on); t.classList.toggle('shadow', on);
+          t.classList.toggle('text-slate-500', !on);
+        });
+        document.querySelectorAll('[data-panel]').forEach(function (p) {
+          var on = p.getAttribute('data-panel') === name;
+          p.classList.toggle('hidden', !on);
+          if (on) p.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+        });
+      }
+      tabs.forEach(function (t) { t.addEventListener('click', function () { showTab(t.getAttribute('data-tab')); }); });
+      // رابط مباشر لصور الهاتف: index.html#phones
+      showTab(location.hash === '#phones' ? 'phone' : 'desk');
+      if (location.hash === '#phones') document.getElementById('gallery').scrollIntoView();
+
+      // إبراز النسخة المناسبة لجهاز الزائر
+      var ua = navigator.userAgent || '';
+      var os = /Android/i.test(ua) ? 'android' : (/Windows/i.test(ua) ? 'windows' : null);
+      if (os) document.querySelectorAll('[data-os="' + os + '"]').forEach(function (el) { el.classList.add('is-recommended'); });
+
+      // رقم آخر إصدار وحجم الملفات من GitHub مباشرة (إن تعذّر تبقى القيم المكتوبة)
+      fetch('https://api.github.com/repos/maher-nofaly/almaher/releases/latest', { headers: { Accept: 'application/vnd.github+json' } })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+        .then(function (rel) {
+          var v = String(rel.tag_name || '').replace(/^v/i, '');
+          if (v) document.querySelectorAll('[data-ver]').forEach(function (e) { e.textContent = v; });
+          if (rel.published_at) {
+            var d = new Date(rel.published_at);
+            document.querySelectorAll('[data-date]').forEach(function (e) { e.textContent = d.toLocaleDateString('ar-SY-u-nu-latn', { year: 'numeric', month: 'long', day: 'numeric' }); });
+            document.querySelectorAll('[data-date-wrap]').forEach(function (e) { e.classList.remove('hidden'); });
+          }
+          (rel.assets || []).forEach(function (a) {
+            var mb = Math.round(a.size / 1048576);
+            if (a.name === 'AlMaher_Setup.exe') document.querySelectorAll('[data-size-win]').forEach(function (e) { e.textContent = mb; });
+            if (a.name === 'almaher.apk') document.querySelectorAll('[data-size-apk]').forEach(function (e) { e.textContent = mb; });
+          });
+        })
+        .catch(function () {});
+    })();
+  </script>
+</body>
+</html>
